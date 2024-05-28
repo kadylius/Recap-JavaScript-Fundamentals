@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Activity Filter</h1>
 
@@ -24,10 +26,10 @@
         <option value="">Select an activity</option>
     </select>
 
-    <label for="priceDropdown">Filter by Price:</label>
+    <label for="priceDropdown">Filter by Maximum Price:</label>
     <select id="priceDropdown">
         <option value="">All prices</option>
-        <option value="50">50</option>
+        <option value="50">50 </option>
         <option value="60">60</option>
         <option value="70">70</option>
         <option value="75">75</option>
@@ -57,44 +59,74 @@
             { name: 'Paragliding', price: 55 }
         ];
 
-        document.addEventListener("DOMContentLoaded", initializeDropdowns);
+        document.addEventListener("DOMContentLoaded", () => {
+            initializeDropdowns();
+        });
+
+
+        function SelectedValue() {
+          const mySelectedActivity =  document.getElementById('activityDropdown').value;
+        }
+
+
+
 
         function initializeDropdowns() {
             populateActivityDropdown();
-            document.getElementById('priceDropdown').addEventListener('change', filterActivitiesByPrice);
+            const priceDropdown = document.getElementById('priceDropdown');
+            priceDropdown.addEventListener('change', handlePriceDropdownChange);
             displayActivities(activities);
         }
 
         function populateActivityDropdown(filteredActivities = activities) {
             const dropdownElement = document.getElementById("activityDropdown");
-            dropdownElement.innerHTML = '<option value="">Select an activity</option>'; // Clear previous options
-            const fragment = document.createDocumentFragment();
-          
-            filteredActivities.forEach(activity => {
-              const activityOption = new Option(`${activity.name} ($${activity.price})`, activity.name);
-              fragment.appendChild(activityOption);
-            });
-          
-            dropdownElement.appendChild(fragment);
+            dropdownElement.innerHTML = '';
+            dropdownElement.appendChild(createDropdownOptions(filteredActivities));
         }
 
-        function filterActivitiesByPrice() {
+        function createDropdownOptions(filteredActivities) {
+            const fragment = document.createDocumentFragment();
+            const defaultOption = new Option('Select an activity', '');
+            fragment.appendChild(defaultOption);
+
+            filteredActivities.forEach(activity => {
+                const activityOption = new Option(`${activity.name} ($${activity.price})`, activity.name);
+                fragment.appendChild(activityOption);
+            });
+
+            return fragment;
+        }
+
+        function handlePriceDropdownChange() {
             const selectedPrice = parseInt(document.getElementById('priceDropdown').value);
-            const filteredActivities = isNaN(selectedPrice) ? activities : activities.filter(activity => activity.price === selectedPrice);
+            const filteredActivities = filterActivitiesByPrice(selectedPrice);
             populateActivityDropdown(filteredActivities);
             displayActivities(filteredActivities);
         }
 
+        function filterActivitiesByPrice(selectedPrice) {
+            return isNaN(selectedPrice) ? activities : activities.filter(activity => activity.price === selectedPrice);
+        }
+
         function displayActivities(activityList) {
             const container = document.getElementById('activityCardsContainer');
-            container.innerHTML = ''; // Clear previous cards
+            container.innerHTML = '';
+            container.appendChild(createActivityCards(activityList));
+        }
+
+        function createActivityCards(activityList) {
+            const fragment = document.createDocumentFragment();
+
             activityList.forEach(activity => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `<h3>${activity.name}</h3><p>Price: $${activity.price}</p>`;
-                container.appendChild(card);
+                fragment.appendChild(card);
             });
+
+            return fragment;
         }
     </script>
 </body>
+
 </html>
