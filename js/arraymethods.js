@@ -33,8 +33,11 @@ console.log(`Age person with name Michael: ${personName.age}`);
 const developers = people.filter(p => p.occupation === 'Developer');
 console.log('Filter developers:', developers);
 
+// Filter to get all the people who are developers and are 28 years old or older
+const developersAbove28 = people.filter(p => p.occupation === 'Developer' && p.age >= 28);
+console.log('Developers 28 years old or older:', developersAbove28);
 
-// Create a filter to filter all the people above 28 years old.
+
 
 
 // 5. includes - Check if an element is in the array (Note: includes is generally used with primitive arrays)
