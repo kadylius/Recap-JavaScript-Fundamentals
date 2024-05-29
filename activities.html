@@ -8,6 +8,7 @@
     <style>
         .card {
             border: 1px solid #ccc;
+            color: red;
             border-radius: 8px;
             padding: 16px;
             margin: 8px;
@@ -59,14 +60,20 @@
             { name: 'Paragliding', price: 55 }
         ];
 
+            //WAit untill everything on the page including images and styling has been loaded.. then the javascript runs
+
+        window.onload = () => {
+            initializeDropdowns();
+        }
+        //DOMcontentLoaded means all HTML has been loaded (without any styling or images)
         document.addEventListener("DOMContentLoaded", () => {
             initializeDropdowns();
         });
 
 
-        function SelectedValue() {
-          const mySelectedActivity =  document.getElementById('activityDropdown').value;
-        }
+      //  function SelectedValue() {
+//const mySelectedActivity =  document.getElementById('activityDropdown').value;
+//}
 
 
 
@@ -115,13 +122,14 @@
         }
 
         function createActivityCards(activityList) {
+           // Part of a document in memory
             const fragment = document.createDocumentFragment();
 
             activityList.forEach(activity => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `<h3>${activity.name}</h3><p>Price: $${activity.price}</p>`;
-                fragment.appendChild(card);
+                fragment.appendChild(card); // adding the card to the fragment of the page
             });
 
             return fragment;
