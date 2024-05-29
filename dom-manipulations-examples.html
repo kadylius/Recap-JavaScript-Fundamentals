@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Manipulation Examples</title>
+</head>
+<body>
+  <!-- Elements for selecting examples -->
+  <div id="example-id">Element with ID</div>
+  <div class="example-class">First element with class</div>
+  <div class="example-class">Second element with class</div>
+  <button onclick="selectElements()">Select Elements</button>
+  <hr>
+
+  <!-- Elements for modifying examples -->
+  <div id="text-element">Original text content</div>
+  <div id="html-element">Original HTML content</div>
+  <div id="styled-element">Styled element</div>
+  <button onclick="modifyElements()">Modify Elements</button>
+  <hr>
+
+  <!-- Elements for creating and inserting examples -->
+  <div id="parent-element"></div>
+  <button onclick="createAndInsertElement()">Create and Insert Element</button>
+  <hr>
+
+  <!-- Example workflow button -->
+  <button onclick="exampleWorkflow()">Run Example Workflow</button>
+  <hr>
+
+  <!-- Form for buying tickets -->
+  <h2>Buy Tickets</h2>
+  <form id="ticket-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+    <label for="country">Country:</label>
+    <select id="country" name="country" required>
+      <!-- Countries will be populated by JavaScript -->
+    </select><br><br>
+    <label for="tickets">Number of Tickets:</label>
+    <input type="number" id="tickets" name="tickets" min="1" required><br><br>
+    <button type="button" onclick="buyTickets()">Buy Tickets</button>
+  </form>
+  <p id="confirmation"></p>
+  <hr>
+
+  <!-- Container for additional creating elements examples -->
+  <div id="country-elements-container"></div>
+  <button onclick="createCountryElements()">Create Country Elements</button>
+  <hr>
+
+  <script>
+    /*
+     * Selecting Elements
+     */
+    function selectElements() {
+      // getElementById
+      const elementById = document.getElementById('example-id');
+      console.log(elementById); // Outputs the element with ID 'example-id'
+
+      // querySelector
+      const firstElement = document.querySelector('.example-class');
+      console.log(firstElement); // Outputs the first element with class 'example-class'
+
+      // querySelectorAll
+      const allElements = document.querySelectorAll('.example-class');
+      console.log(allElements); // Outputs a NodeList of all elements with class 'example-class'
+    }
+
+    /*
+     * Modifying Elements
+     */
+    function modifyElements() {
+      // textContent
+      const textElement = document.getElementById('text-element');
+      textElement.textContent = 'New text content';
+      console.log(textElement.textContent); // Outputs: 'New text content'
+
+      // innerHTML
+      const htmlElement = document.getElementById('html-element');
+      htmlElement.innerHTML = '<strong>New HTML content</strong>';
+      console.log(htmlElement.innerHTML); // Outputs: '<strong>New HTML content</strong>'
+
+      // style
+      const styledElement = document.getElementById('styled-element');
+      styledElement.style.color = 'blue';
+      console.log(styledElement.style.color); // Outputs: 'blue'
+    }
+
+    /*
+     * Creating and Inserting Elements
+     */
+    function createAndInsertElement() {
+      // createElement
+      const newElement = document.createElement('div');
+      newElement.textContent = 'I am a new div';
+      console.log(newElement); // Outputs: <div>I am a new div</div>
+
+      // appendChild
+      const parentElement = document.getElementById('parent-element');
+      parentElement.appendChild(newElement);
+      // The newElement <div>I am a new div</div> is now a child of parentElement
+    }
+
+    /*
+     * Example Workflow
+     * Let's put it all together in a small example.
+     */
+    function exampleWorkflow() {
+      // Assuming the HTML structure:
+      // <div id="parent-element"></div>
+
+      // Step 1: Select the parent element
+      const parent = document.getElementById('parent-element');
+
+      // Step 2: Create a new element
+      const child = document.createElement('p');
+      child.textContent = 'Hello, I am a new paragraph';
+
+      // Step 3: Modify the new element's style
+      child.style.color = 'green';
+
+      // Step 4: Insert the new element into the parent element
+      parent.appendChild(child);
+
+      // Result: The parent element now contains the new paragraph with the text 'Hello, I am a new paragraph' and its color set to green.
+    }
+
+    /*
+     * Array of Objects: Countries
+     */
+    const countries = [
+      { name: 'United States', code: 'US' },
+      { name: 'Canada', code: 'CA' },
+      { name: 'United Kingdom', code: 'UK' },
+      { name: 'Australia', code: 'AU' },
+      { name: 'Germany', code: 'DE' },
+      { name: 'France', code: 'FR' }
+    ];
+
+    // Populate the country dropdown
+    function populateCountries() {
+      const countrySelect = document.getElementById('country');
+      countries.forEach((country) => {
+        const option = document.createElement('option');
+        option.value = country.code;
+        option.textContent = country.name;
+        countrySelect.appendChild(option);
+      });
+    }
+
+    /*
+     * Collecting Information and Confirming Purchase
+     */
+    function buyTickets() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const country = document.getElementById('country').value;
+      const tickets = document.getElementById('tickets').value;
+      const confirmation = document.getElementById('confirmation');
+
+      confirmation.textContent = `Thank you, ${name}! You have purchased ${tickets} tickets. A confirmation email will be sent to ${email}.`;
+    }
+
+    // Initialize the form with countries
+    populateCountries();
+
+    /*
+     * Creating and Inserting Elements: Country Examples
+     */
+    function createCountryElements() {
+      const container = document.getElementById('country-elements-container');
+      container.innerHTML = ''; // Clear previous elements
+
+      countries.forEach((country) => {
+        // Example 1: Create a paragraph for each country
+        const paragraph = document.createElement('p');
+        paragraph.textContent = `Country: ${country.name} (Code: ${country.code})`;
+        container.appendChild(paragraph);
+
+        // Example 2: Create a list item for each country
+        const listItem = document.createElement('li');
+        listItem.textContent = `${country.name} - ${country.code}`;
+        container.appendChild(listItem);
+
+        // Example 3: Create a div for each country with a class
+        const div = document.createElement('div');
+        div.className = 'country-div';
+        div.textContent = `Div: ${country.name}`;
+        container.appendChild(div);
+
+        // Example 4: Create a span for each country
+        const span = document.createElement('span');
+        span.textContent = `Span: ${country.name}`;
+        container.appendChild(span);
+
+        // Example 5: Create a button for each country
+        const button = document.createElement('button');
+        button.textContent = `Button for ${country.name}`;
+        button.onclick = () => alert(`You clicked on ${country.name}`);
+        container.appendChild(button);
+      });
+    }
+  </script>
+</body>
+</html>
