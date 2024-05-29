@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Conversation</title>
+</head>
+
+<body>
+    <div id="grandParent">
+
+        <p id="grandparentMessage"></p>
+        <div id="parent">
+            <p id="child1"></p>
+            <p id="child2"></p>
+            <p id="parentMessage"></p>
+        </div>
+    </div>
+    <script>
+        // Accessing the grandparent element
+        const grandParent = document.getElementById('grandparentMessage');
+
+        // Creating and appending the grandparent's message
+        const grandparentMessage = document.createElement('p');
+        grandparentMessage.textContent = 'Grandpa: You should not eat in front of the TV.';
+        grandParent.appendChild(grandparentMessage);
+
+        // Accessing the parent element
+        const parent = document.getElementById('parent');
+
+        // Creating and appending the children's messages
+        const child1 = document.createElement('p');
+        child1.textContent = 'Remsey: But I like eating in front of the TV!';
+        parent.appendChild(child1);
+
+        const child2 = document.createElement('p');
+        child2.textContent = 'Nathalie: Me too! Can we, please?';
+        parent.appendChild(child2);
+
+        // Creating and appending the parent's message
+        const parentMessage = document.createElement('p');
+        parentMessage.textContent = 'Mom: Listen to your grandpa!';
+        parent.appendChild(parentMessage);
+
+
+
+    </script>
+</body>
+
+</html>
